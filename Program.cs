@@ -32,14 +32,38 @@ public class SayatubeVideo
     private int playCount;
     public SayatubeVideo(String Judul)
     {
-        this.title = Judul;
-        this.id = random.Next(10000, 99999);
-        this.playCount = 0;
+        if (String.IsNullOrEmpty(Judul) || Judul.Length > 200)
+        {
+            Console.WriteLine("inputan tidak valid");
+        }
+        else
+        {
+            this.title = Judul;
+            this.id = random.Next(10000, 99999);
+            this.playCount = 0;
+        }
     }
 
     public void increasePlaycount(int playCount)
     {
-        this.playCount += playCount;
+        if (playCount > 10000000)
+        {
+            Console.WriteLine("input Playcount invalid");
+        }
+        else
+        {
+            try
+            {
+                checked
+                {
+                    this.playCount = this.playCount + playCount;
+                }
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Overflow");
+            }
+        }
     }
 
     public int getPlayCount()
@@ -63,9 +87,16 @@ public class SayatubeUser
     public String username;
     public SayatubeUser(String username)
     {
-        id = random.Next(10000, 99999);
-        this.uploadedVideos = new List<SayatubeVideo>();
-        this.username = username;
+        if (String.IsNullOrEmpty(username) || username.Length > 200)
+        {
+            Console.WriteLine("Invalid");
+        }
+        else
+        {
+            id = random.Next(10000, 99999);
+            this.uploadedVideos = new List<SayatubeVideo>();
+            this.username = username;
+        }
     }
     public int getTotalVideoPlayCount()
     {
